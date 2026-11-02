@@ -1,6 +1,9 @@
 import { lecturers } from '../data/lecturers';
+import EnrollModal from '../components/EnrollModal';
+import useToggle from '../hooks/useToggle';
 
 export default function CourseDetail({ id, navigate }) {
+  const [modalOpen, toggleModal] = useToggle();
   let course = null;
   let lecturer = null;
 
@@ -53,7 +56,16 @@ export default function CourseDetail({ id, navigate }) {
         ))}
       </div>
 
-      <button className="btn-primary btn-large">Записаться на курс</button>
+      <button className="btn-primary btn-large" onClick={toggleModal}>
+        Записаться на курс
+      </button>
+
+      {modalOpen && (
+        <EnrollModal
+          onClose={toggleModal}
+          title={course.title}
+        />
+      )}
 
     </div>
   );

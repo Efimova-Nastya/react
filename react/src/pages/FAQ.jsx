@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import useToggle from '../hooks/useToggle';
 
 const faqItems = [
   { q: 'Как записаться на занятие?', a: 'Выберите лектора на странице «Лекторы», откройте его профиль и нажмите «Подробнее». Там вы найдёте тарифы и сможете записаться.' },
@@ -8,24 +8,27 @@ const faqItems = [
   { q: 'Как стать лектором?', a: 'Напишите нам на info@info.ru с резюме и описанием ваших дисциплин.' }
 ];
 
-export default function FAQ() {
-  const [open, setOpen] = useState(null);
+function FaqItem({ item }) {
+  const [isOpen, toggle] = useToggle();
 
+  return (
+    <div className="faq-item">
+      <button className="faq-question" onClick={toggle}>
+        {item.q}
+        <span>{isOpen ? '−' : '+'}</span>
+      </button>
+      {isOpen && <p className="faq-answer">{item.a}</p>}
+    </div>
+  );
+}
+
+export default function FAQ() {
   return (
     <div className="page">
       <h1>Частые вопросы</h1>
       <div className="faq">
         {faqItems.map((item, i) => (
-          <div key={i} className="faq-item">
-            <button
-              className="faq-question"
-              onClick={() => setOpen(open === i ? null : i)}
-            >
-              {item.q}
-              <span>{open === i ? '−' : '+'}</span>
-            </button>
-            {open === i && <p className="faq-answer">{item.a}</p>}
-          </div>
+          <FaqItem key={i} item={item} />
         ))}
       </div>
     </div>

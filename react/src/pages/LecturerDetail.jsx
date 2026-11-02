@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { lecturers } from '../data/lecturers';
 import Avatar from '../components/Avatar';
+import EnrollModal from '../components/EnrollModal';
+import useToggle from '../hooks/useToggle';
 
 export default function LecturerDetail({ id, navigate }) {
   const lecturer = lecturers.find(l => l.id === id);
   const [tab, setTab] = useState('subjects');
+  const [modalOpen, toggleModal] = useToggle();
 
   if (!lecturer) return <div className="page">Лектор не найден</div>;
 
@@ -23,8 +26,9 @@ export default function LecturerDetail({ id, navigate }) {
           </p>
           <p>Стаж: {lecturer.experience} лет</p>
           <p>{lecturer.education}</p>
-          <button className="btn-primary btn-large">Записаться</button>
-
+          <button className="btn-primary btn-large" onClick={toggleModal}>
+            Записаться
+          </button>
         </div>
       </div>
 
@@ -61,7 +65,12 @@ export default function LecturerDetail({ id, navigate }) {
         </div>
       )}
 
-
+      {modalOpen && (
+        <EnrollModal
+          onClose={toggleModal}
+          title={lecturer.name}
+        />
+      )}
     </div>
   );
 }
