@@ -1,4 +1,4 @@
-import { useToggle } from '../hooks/useToggle';
+import useToggle from '../hooks/useToggle';
 
 const faqItems = [
   { q: 'Как записаться на занятие?', a: 'Выберите лектора на странице «Лекторы», откройте его профиль и нажмите «Подробнее». Там вы найдёте тарифы и сможете записаться.' },
@@ -9,7 +9,7 @@ const faqItems = [
 ];
 
 function FaqItem({ item }) {
-  const [isOpen, toggle] = useToggle(false);
+  const [isOpen, toggle] = useToggle();
 
   return (
     <div className="faq-item">

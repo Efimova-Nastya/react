@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { lecturers } from '../data/lecturers';
 import Avatar from '../components/Avatar';
-import { useToggle } from '../hooks/useToggle';
+import EnrollModal from '../components/EnrollModal';
+import useToggle from '../hooks/useToggle';
 
 export default function LecturerDetail({ id, navigate }) {
   const lecturer = lecturers.find(l => l.id === id);
   const [tab, setTab] = useState('subjects');
-  const [isModalOpen, toggleModal] = useToggle(false);
+  const [modalOpen, toggleModal] = useToggle();
 
   if (!lecturer) return <div className="page">Лектор не найден</div>;
 
@@ -25,8 +26,9 @@ export default function LecturerDetail({ id, navigate }) {
           </p>
           <p>Стаж: {lecturer.experience} лет</p>
           <p>{lecturer.education}</p>
-          <button className="btn-primary btn-large" onClick={toggleModal}>Записаться</button>
-
+          <button className="btn-primary btn-large" onClick={toggleModal}>
+            Записаться
+          </button>
         </div>
       </div>
 
@@ -63,15 +65,11 @@ export default function LecturerDetail({ id, navigate }) {
         </div>
       )}
 
-      {isModalOpen && (
-        <div className="modal-overlay" onClick={toggleModal}>
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <h2>Записаться на занятие</h2>
-            <p>Лектор: {lecturer.name}</p>
-            <p>Тарифы можно посмотреть на вкладке «Тарифы» ниже, а для записи напишите нам на info@info.ru — отдельной формы и бэкенда в проекте пока нет.</p>
-            <button className="btn-primary" onClick={toggleModal}>Закрыть</button>
-          </div>
-        </div>
+      {modalOpen && (
+        <EnrollModal
+          onClose={toggleModal}
+          title={lecturer.name}
+        />
       )}
     </div>
   );

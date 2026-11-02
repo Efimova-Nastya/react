@@ -490,6 +490,7 @@ button { font-family: inherit; }
   background: #080CF0;
   color: #FFFFFF;
 }
+
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -497,13 +498,38 @@ button { font-family: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 200;
+  padding: 20px;
+  z-index: 1000;
 }
 .modal {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
   background: #fff;
   border-radius: 16px;
-  padding: 24px;
-  max-width: 480px;
-  width: calc(100% - 40px);
+  padding: 32px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
 }
-.modal h2 { margin-bottom: 12px; }
+.modal h2 { font-size: 24px; margin-bottom: 4px; }
+.modal-subtitle { color: #080CF0; font-weight: 600; margin-bottom: 20px; }
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  line-height: 1;
+  color: #666;
+  cursor: pointer;
+}
+.modal-close:hover { color: #080CF0; }
+.modal-form { display: flex; flex-direction: column; gap: 12px; }
+.modal-form input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+}
+.modal-form .btn-primary { align-self: flex-start; margin-top: 4px; }
